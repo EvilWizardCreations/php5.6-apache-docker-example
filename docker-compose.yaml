@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  web-server:
+    build: 
+      context: .
+      dockerfile: php-8-2-apache.Dockerfile
+      labels:
+        ewc.name: "Web Server"
+        ewc.description: "PHP & Apache Web Server"
+        ewc.php.version: "8.2"
+        ewc.label-with-empty-value: ""
+    image: ewc2020/web:php-8-2-apache
+    container_name: web-server
+    ports:
+      - ${APP_PORT}:80
+      - ${APP_PORT_SSL}:443
+    volumes:
+      - ./public_html:/var/www/html
+      - ./docker-files/php/local.ini:/usr/local/etc/php.ini
+    networks:
+      - webapp_network
+
+networks:
+  webapp_network:
+
