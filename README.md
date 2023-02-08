@@ -27,4 +27,4 @@ PHP Extensions:
 - zip
 - yaml
 
-[^docker_pull_cmd_note] Use `docker pull ewc2020/web:php-5.6-apache` to get a copy of the image.
+[^docker_pull_cmd_note]: Use `docker pull ewc2020/web:php-5.6-apache` to get a copy of the image.
