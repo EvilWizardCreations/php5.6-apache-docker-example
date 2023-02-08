@@ -1,6 +1,6 @@
 # PHP 5.6 & Apache Dockerfile Example
 
-A base PHP 5.6 Apache 2 image for demonstrating legacy projects.
+A base PHP 5.6 Apache 2 image[^docker_pull_cmd_note] for demonstrating legacy projects available at [EWC Docker Hub](https://hub.docker.com/r/ewc2020/web).
 
 An older version of ***PHP*** that some older codebase sites would require as an environment to run in.
 
@@ -26,3 +26,5 @@ PHP Extensions:
 - pdo_mysql 
 - zip
 - yaml
+
+[^docker_pull_cmd_note] Use `docker pull ewc2020/web:php-5.6-apache` to get a copy of the image.
