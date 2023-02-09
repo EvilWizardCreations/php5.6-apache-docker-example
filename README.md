@@ -31,30 +31,50 @@ PHP Extensions:
 
 Build the ***Docker Image*** without using ***cached*** versions of previous image build stages.
 
-**N.B.**
-
-This ***requires*** that the file be named `Dockerfile` and nothing else unless specified with the `-f php-5-6-apache.Dockerfile`.
-
 ```bash
 sudo docker build -f php-5-6-apache.Dockerfile --target php-5-6-build --no-cache -t php-5-6-web-server:latest .
 ```
+
+**N.B.**
+
+- Using `-f php-5-6-apache.Dockerfile`
+
+    To specify the *filename* to ***build*** otherwise it is expected to be named `Dockerfile`.
+
+- Using `--target php-5-6-build`
+
+    To select the ***build target stage***[^multi_stage_builds_note] from the *Dockerfile*.
 
 ### Create A Container
 
 This creates a named container and attaches it to the ***host network*** and may cause port conflict if the host machine is already listening on any exposed ports from the ***Docker Image*** being used.
 
 ```bash
-sudo docker run -d --network host -v "$(pwd)"/public_html:/var/www/html --name container-name php-5-6-web-server
+sudo docker run -d --network host -v "$(pwd)"/public_html:/var/www/html --name php-5-6-web-server php-5-6-web-server
 ```
 
 **OR**
 
-This creates a named container and attaches it to the ***bridge network*** and allows for ***port forward mapping*** from the ***host*** to the ***Container***.  The ports are mapped **8080** on the ***Host*** machine to port **80** on the ***Container***
+This creates a named container and attaches it to the ***bridge network*** and allows for ***port forward mapping*** from the ***host*** to the ***Container***.
 
 ```bash
-sudo docker run -d --network bridge -p 8080:80/tcp -v "$(pwd)"/public_html:/var/www/html --name container-name php-5-6-web-server
+sudo docker run -d --network bridge -p 8082:80/tcp -v "$(pwd)"/public_html:/var/www/html --name php-5-6-web-server php-5-6-web-server
 ```
 
+**N.B.**
+
+- Using `-v "$(pwd)"/public_html:/var/www/html`
+
+    To ***Volume Mount*** the folder `public_html` from the current folder to `/var/www/html` on the ***running*** container. It is where ***Apache*** serves the content from & allows for *realtime* change updates.
+
+- Using `-p 8080:80/tcp` 
+
+    To map port **8080** on the ***Host*** machine to port **80** on the ***Container*** using the ***bridge network***.
+
+- Using `--name php-5-6-web-server`
+
+    To name the ***Container*** being created.
+    
 ### Start Container
 
 ```bash
@@ -94,5 +114,7 @@ sudo docker exec -it php-5-6-web-server /bin/bash
 ```
 
 [^docker_pull_cmd_note]: Use `docker pull ewc2020/web:php-5.6-apache` to get a copy of the image.
+
+[^multi_stage_builds_note]: Used mostly in ***Multi Stage*** image builds.
 
 [^compose_name_note]: The `php-5-6-web-server` container name to build the image for.
