@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:5.6-apache as php-5-6-build
 
 # Set some image labels
 LABEL evilwizardcreations.image.authors="evil.wizard95@googlemail.com" \

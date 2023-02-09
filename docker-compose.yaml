@@ -1,17 +1,27 @@
-version: '3.4'
+version: '3.7'
 
 services:
   php-5-6-web-server:
+    container_name: php-5-6-web-server
+    tty: true
+    restart: unless-stopped
     build: 
       context: .
+      target: php-5-6-build
       dockerfile: php-5-6-apache.Dockerfile
+      args:
+        - APP_ENV=${APP_ENV}
       labels:
         ewc.name: "Web Server"
         ewc.description: "PHP & Apache Web Server"
         ewc.php.version: "5.6"
         ewc.label-with-empty-value: ""
     image: ewc2020/web:php-5-6-apache
-    container_name: php-5-6-web-server
+    environment:
+        - APP_ENV=${APP_ENV}
+        - APP_PORT=${APP_PORT}
+        - APP_PORT_SSL=${APP_PORT_SSL}
+    working_dir: /var/www
     ports:
       - ${APP_PORT}:80
       - ${APP_PORT_SSL}:443
