@@ -16,7 +16,7 @@ services:
         ewc.description: "PHP & Apache Web Server"
         ewc.php.version: "5.6"
         ewc.label-with-empty-value: ""
-    image: ewc2020/web:php-5-6-apache
+    image: php-5-6-web-server:latest
     environment:
         - APP_ENV=${APP_ENV}
         - APP_PORT=${APP_PORT}
