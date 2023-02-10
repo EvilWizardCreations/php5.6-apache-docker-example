@@ -5,9 +5,11 @@ LABEL evilwizardcreations.image.authors="evil.wizard95@googlemail.com" \
     evilwizardcreations.image.php.version="5.6"
 
 # copy the specific Composer PHAR version from the Composer image into the PHP image
-COPY --from=composer:1.9.3 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.7.1 /usr/bin/composer /usr/bin/composer
 
 # Download the nodejs setup & set that it's a docker env.
+# npm -v 6.4.1
+# yarn -v 1.10.1
 ENV NODE_ENV docker
 RUN curl --silent --location https://deb.nodesource.com/setup_14.x | bash
 

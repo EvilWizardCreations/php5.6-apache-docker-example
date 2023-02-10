@@ -7,7 +7,7 @@ An older version of ***PHP*** that some older codebase sites would require as an
 Other Packages Included:
 
 - Node
-- Composer v1.9.3
+- Composer v1.7.1
 - libxml2-dev
 - libzip-dev
 - libyaml-dev
