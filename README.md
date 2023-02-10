@@ -16,7 +16,7 @@ Other Packages Included:
 - nodejs
 - default-mysql-client
 - vim
-- npm i npm@latest -g
+- npm i npm@6.4.1 -g
 - yaml-1.3.0
 
 PHP Extensions:

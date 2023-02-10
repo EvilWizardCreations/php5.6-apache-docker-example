@@ -31,7 +31,7 @@ RUN set -ex; \
       default-mysql-client \ 
       vim; \
     apt-get clean; \
-    npm i npm@latest -g
+    npm i npm@6.4.1 -g
 
 # Install some php extensions from the docker built source.
 RUN docker-php-ext-install gettext mysqli pdo_mysql zip
