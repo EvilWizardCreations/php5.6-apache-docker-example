@@ -32,7 +32,12 @@ PHP Extensions:
 Build the ***Docker Image*** without using ***cached*** versions of previous image build stages.
 
 ```bash
-sudo docker build -f php-5-6-apache.Dockerfile --target php-5-6-build --no-cache -t php-5-6-web-server:latest .
+sudo docker build \
+    -f php-5-6-apache.Dockerfile \
+    --target php-5-6-build \
+    --no-cache \
+    -t php-5-6-web-server:latest \
+    .
 ```
 
 **N.B.**
@@ -50,7 +55,12 @@ sudo docker build -f php-5-6-apache.Dockerfile --target php-5-6-build --no-cache
 This creates a named container and attaches it to the ***host network*** and may cause port conflict if the host machine is already listening on any exposed ports from the ***Docker Image*** being used.
 
 ```bash
-sudo docker run -d --network host -v "$(pwd)"/public_html:/var/www/html --name php-5-6-web-server php-5-6-web-server:latest
+sudo docker run \
+    -d \
+    --network host \
+    -v "$(pwd)"/public_html:/var/www/html \
+    --name php-5-6-web-server \
+    php-5-6-web-server:latest
 ```
 
 **OR**
@@ -58,7 +68,13 @@ sudo docker run -d --network host -v "$(pwd)"/public_html:/var/www/html --name p
 This creates a named container and attaches it to the ***bridge network*** and allows for ***port forward mapping*** from the ***host*** to the ***Container***.
 
 ```bash
-sudo docker run -d --network bridge -p 8080:80/tcp -v "$(pwd)"/public_html:/var/www/html --name php-5-6-web-server php-5-6-web-server:latest
+sudo docker run \
+    -d \
+    --network bridge \
+    -p 8080:80/tcp \
+    -v "$(pwd)"/public_html:/var/www/html \
+    --name php-5-6-web-server \
+    php-5-6-web-server:latest
 ```
 
 **N.B.**

@@ -4,14 +4,17 @@ FROM php:5.6-apache as php-5-6-build
 LABEL evilwizardcreations.image.authors="evil.wizard95@googlemail.com" \
     evilwizardcreations.image.php.version="5.6"
 
-# Enable some apache modules.
-RUN a2enmod rewrite; \
-    a2enmod headers; \
-    a2enmod ssl
+# copy the specific Composer PHAR version from the Composer image into the PHP image
+COPY --from=composer:1.9.3 /usr/bin/composer /usr/bin/composer
 
 # Download the nodejs setup & set that it's a docker env.
 ENV NODE_ENV docker
 RUN curl --silent --location https://deb.nodesource.com/setup_14.x | bash
+
+# Enable some apache modules.
+RUN a2enmod rewrite; \
+    a2enmod headers; \
+    a2enmod ssl
 
 # Install some extra stuff
 RUN set -ex; \
@@ -32,6 +35,3 @@ RUN set -ex; \
 RUN docker-php-ext-install gettext mysqli pdo_mysql zip
 RUN pecl install yaml-1.3.0 && \
     docker-php-ext-enable yaml
-
-# copy the specific Composer PHAR version from the Composer image into the PHP image
-COPY --from=composer:1.9.3 /usr/bin/composer /usr/bin/composer
