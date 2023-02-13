@@ -8,10 +8,9 @@ LABEL evilwizardcreations.image.authors="evil.wizard95@googlemail.com" \
 COPY --from=composer:1.7.1 /usr/bin/composer /usr/bin/composer
 
 # Download the nodejs setup & set that it's a docker env.
-# npm -v 6.4.1
-# yarn -v 1.10.1
 ENV NODE_ENV docker
-RUN curl --silent --location https://deb.nodesource.com/setup_14.x | bash
+# Node -v v8.12.0
+RUN curl --silent --location https://deb.nodesource.com/setup_8.x | bash
 
 # Enable some apache modules.
 RUN a2enmod rewrite; \
