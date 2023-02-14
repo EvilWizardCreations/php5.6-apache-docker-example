@@ -12,6 +12,7 @@ Other Packages Included:
 - libzip-dev
 - libyaml-dev
 - zip
+- unzip
 - git
 - nodejs
 - default-mysql-client

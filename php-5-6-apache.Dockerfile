@@ -25,6 +25,7 @@ RUN set -ex; \
       libzip-dev \
       libyaml-dev \
       zip \
+      unzip \
       git \
       nodejs  \
       default-mysql-client \ 
