@@ -150,7 +150,7 @@ sudo docker exec -it php-5-6-web-server /bin/bash
 
 This Apache2 + PHP 5.6 build environment should ***NOT*** be used anywhere near a ***production*** environment. This build is for showcasing legacy systems that simple would not run in modern environments & as such it is littered with security holes and exploitation's.
 
-[^docker_pull_cmd_note]: Use `docker pull ewc2020/web:php-5.6-apache` to get a copy of the image.
+[^docker_pull_cmd_note]: Use `docker pull ewc2020/web:php-5.6-apache-latest` to get a copy of the image.
 
 [^npm_version_note]: Uses a `.env` ***build-arg*** called ***NPM_VERSION*** to specify the npm version.
 
