@@ -4,6 +4,9 @@ FROM php:5.6-apache as php-5-6-build
 LABEL evilwizardcreations.image.authors="evil.wizard95@googlemail.com" \
     evilwizardcreations.image.php.version="5.6"
 
+ARG NPM_VERSION=6.4.1
+ENV NPM_VERSION=$NPM_VERSION
+
 # copy the specific Composer PHAR version from the Composer image into the PHP image
 COPY --from=composer:1.7.1 /usr/bin/composer /usr/bin/composer
 
@@ -31,7 +34,7 @@ RUN set -ex; \
       default-mysql-client \ 
       vim; \
     apt-get clean; \
-    npm i npm@6.4.1 -g
+    npm i npm@$NPM_VERSION -g
 
 # Install some php extensions from the docker built source.
 RUN docker-php-ext-install gettext mysqli pdo_mysql zip
