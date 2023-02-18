@@ -17,7 +17,7 @@ Other Packages Included:
 - nodejs
 - default-mysql-client
 - vim
-- npm i npm@6.4.1 -g
+- npm i npm@`$NPM_VERSION`[^npm_version_note] -g
 - yaml-1.3.0
 
 PHP Extensions:
@@ -32,10 +32,22 @@ PHP Extensions:
 
 Build the ***Docker Image*** without using ***cached*** versions of previous image build stages.
 
+### Helper Script
+
+A helper script is available with the repo to force recreate the build & use the `docker-compose.yaml` file which reads the `.env` file.
+
+```bash
+./build-web.sh
+```
+
+### The long Way
+
 ```bash
 sudo docker build \
     -f php-5-6-apache.Dockerfile \
     --target php-5-6-build \
+    --build-arg APP_ENV=local \
+    --build-arg NPM_VERSION=6.4.1 \
     --no-cache \
     -t php-5-6-web-server:latest \
     .
@@ -50,6 +62,10 @@ sudo docker build \
 - Using `--target php-5-6-build`
 
     To select the ***build target stage***[^multi_stage_builds_note] from the *Dockerfile*.
+    
+- Using `--build-arg ARG=value`
+
+    To set build argument values to use.
 
 ### Create A Container
 
@@ -135,6 +151,8 @@ sudo docker exec -it php-5-6-web-server /bin/bash
 This Apache2 + PHP 5.6 build environment should ***NOT*** be used anywhere near a ***production*** environment. This build is for showcasing legacy systems that simple would not run in modern environments & as such it is littered with security holes and exploitation's.
 
 [^docker_pull_cmd_note]: Use `docker pull ewc2020/web:php-5.6-apache` to get a copy of the image.
+
+[^npm_version_note]: Uses a `.env` ***build-arg*** called ***NPM_VERSION*** to specify the npm version.
 
 [^multi_stage_builds_note]: Used mostly in ***Multi Stage*** image builds.
 
