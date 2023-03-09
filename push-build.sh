@@ -11,7 +11,7 @@ echo -e "Publishing EWC Web Docker Image Build"
 set -o allexport; source .env; set +o allexport
 
 image=${BUILD_IMAGE:-php-5.6-apache}
-image_tag=${BUILD_IMAGE_TAG:-v0.0.3}
+image_tag=${BUILD_IMAGE_TAG:-v0.0.4}
 
 # Tag the local copy to the remote webserver repo & push the release version
 echo -e "Tagging build image as :$image_tag to webserver repo"
