@@ -8,6 +8,17 @@ services:
     container_name: php-5-6-apache
     tty: true
     restart: unless-stopped
+    build: 
+      context: .
+      target: ${APACHE_PHP56_DOCKER_BUILD_TARGET}
+      dockerfile: ${DOCKER_BUILD_FILE}
+      args:
+        - NPM_VERSION=${NPM_VERSION}
+        - APP_ENV=${APP_ENV}
+      labels:
+        ewc.name: "Web Server"
+        ewc.description: "${APACHE_PHP56_DOCKER_BUILD_DESC}"
+        ewc.php.version: "${PHP_VERSION}"
     image: ${APACHE_PHP56_DOCKER_IMAGE}:${APACHE_PHP56_DOCKER_IMAGE_TAG}
     environment:
         - NPM_VERSION=${NPM_VERSION}
