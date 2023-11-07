@@ -28,28 +28,43 @@ PHP Extensions:
 - zip
 - yaml
 
-## Build Image
+## Build & Compose Up
+
+Note that the `php-5-6-apache` is the Docker Compose Service to ***Build***.
+
+There is a build script included that uses the local `.env` file & an [Evil Wizard Creations Protocol](https://bitbucket.org/evilwizardcreations/ewc-protocols) that makes this much simpler.
+
+```bash
+build-up-php-7.2-fpm.sh
+```
+
+Alternatively there is the *full Procedure*.
+
+1. Build the Image using the `docker-compose-build.yaml` configuration.
+
+    ```bash
+    docker-compose -f ./docker-compose-build.yaml build --no-cache php-5-6-apache
+    ```
+
+1. Compose *Up* using the `docker-compose-build.yaml` configuration will use the new built Image and `-d` to *detach*.
+
+    ```bash
+    docker-compose -f ./docker-compose-build.yaml up -d
+    ```
+
+## Build Image The Long Way
 
 Build the ***Docker Image*** without using ***cached*** versions of previous image build stages.
 
-### Helper Script
-
-A helper script is available with the repo to force recreate the build & use the `docker-compose.yaml` file which reads the `.env` file.
-
-```bash
-./build-web.sh
-```
-
-### The long Way
 
 ```bash
 sudo docker build \
     -f php-5-6-apache.Dockerfile \
-    --target php-5-6-build \
+    --target build-php-56-apache \
     --build-arg APP_ENV=local \
     --build-arg NPM_VERSION=6.4.1 \
     --no-cache \
-    -t php-5-6-web-server:latest \
+    -t php-5-6-apache:latest \
     .
 ```
 
@@ -57,15 +72,27 @@ sudo docker build \
 
 - Using `-f php-5-6-apache.Dockerfile`
 
-    To specify the *filename* to ***build*** otherwise it is expected to be named `Dockerfile`.
+    To specify `php-5-6-apache.Dockerfile` as the *filename* to ***build*** otherwise it is expected to be named just `Dockerfile`.
 
-- Using `--target php-5-6-build`
+- Using `--target build-php-56-apache`
 
     To select the ***build target stage***[^multi_stage_builds_note] from the *Dockerfile*.
-    
-- Using `--build-arg ARG=value`
 
-    To set build argument values to use.
+- Using `--no-cache`
+
+    To prevent using previous ***cached*** versions of image build stages.
+    
+- Using `--build-arg NPM_VERSION=6.4.1`
+
+    To set build ***arguments*** & ***values*** to use during the build process. `NPM_VERSION=6.4.1` sets the ***Node Version*** to be used to ***6.4.1*** when rebuilding the image.
+
+- Using `-t php-5-6-apache:latest` 
+
+    To ***name*** & ***tag*** the locally built docker image.
+
+- Using `.`
+
+    To set the current location as the ***build context*** for the build process.
 
 ### Create A Container
 
@@ -76,8 +103,8 @@ sudo docker run \
     -d \
     --network host \
     -v "$(pwd)"/public_html:/var/www/html \
-    --name php-5-6-web-server \
-    php-5-6-web-server:latest
+    --name php-5-6-apache \
+    php-5-6-apache:latest
 ```
 
 **OR**
@@ -90,8 +117,8 @@ sudo docker run \
     --network bridge \
     -p 8080:80/tcp \
     -v "$(pwd)"/public_html:/var/www/html \
-    --name php-5-6-web-server \
-    php-5-6-web-server:latest
+    --name php-5-6-apache \
+    php-5-6-apache:latest
 ```
 
 **N.B.**
@@ -104,46 +131,26 @@ sudo docker run \
 
     To map port **8080** on the ***Host*** machine to port **80** on the ***Container*** using the ***bridge network***.
 
-- Using `--name php-5-6-web-server`
+- Using `--name php-5-6-apache`
 
     To name the ***Container*** being created.
 
 ### Start Container
 
 ```bash
-sudo docker start php-5-6-web-server
+sudo docker start php-5-6-apache
 ```
 
 ### Stop Container
 
 ```bash
-sudo docker stop php-5-6-web-server
-```
-
-## Docker Compose
-
-A `docker-compose` configuration file is included to simplify the build & deployment of the image.
-
-### Build - No Cache
-
-This is only necessary when completely rebuilding the image to make sure all parts are rebuilt[^compose_name_note].
-
-```bash
-sudo docker-compose build --no-cache php-5-6-web-server
-```
-
-### Build & Up
-
-This will try to use a local version or rebuild the image with current context.
-
-```bash
-sudo docker-compose up --build -d
+sudo docker stop php-5-6-apache
 ```
 
 ## Connect To Container
 
 ```bash
-sudo docker exec -it php-5-6-web-server /bin/bash
+sudo docker exec -it php-5-6-apache /bin/bash
 ```
 
 # Disclaimer
@@ -156,4 +163,4 @@ This Apache2 + PHP 5.6 build environment should ***NOT*** be used anywhere near 
 
 [^multi_stage_builds_note]: Used mostly in ***Multi Stage*** image builds.
 
-[^compose_name_note]: The `php-5-6-web-server` container name to build the image for.
+[^compose_name_note]: The `php-5-6-apache` container name to build the image for.
