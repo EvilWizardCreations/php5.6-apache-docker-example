@@ -35,7 +35,7 @@ Note that the `php-5-6-apache` is the Docker Compose Service to ***Build***.
 There is a build script included that uses the local `.env` file & an [Evil Wizard Creations Protocol](https://bitbucket.org/evilwizardcreations/ewc-protocols) that makes this much simpler.
 
 ```bash
-build-up-php-7.2-fpm.sh
+build-up-php-5-6-apache.sh
 ```
 
 Alternatively there is the *full Procedure*.
@@ -55,7 +55,6 @@ Alternatively there is the *full Procedure*.
 ## Build Image The Long Way
 
 Build the ***Docker Image*** without using ***cached*** versions of previous image build stages.
-
 
 ```bash
 sudo docker build \

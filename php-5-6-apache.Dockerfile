@@ -10,7 +10,7 @@ ENV NPM_VERSION=$NPM_VERSION
 # copy the specific Composer PHAR version from the Composer image into the PHP image
 COPY --from=composer:1.7.1 /usr/bin/composer /usr/bin/composer
 
-# The apt-get sources for this are so old it has been archived & needs chainging
+# The apt-get sources for this are so old it has been archived & needs changing
 COPY ./build-assets/etc/apt/sources.list /etc/apt/sources.list
 
 # The pecl is so old it needs the local offline install now
@@ -62,7 +62,7 @@ ENV NPM_VERSION=$NPM_VERSION
 # copy the specific Composer PHAR version from the Composer image into the PHP image
 COPY --from=composer:1.7.1 /usr/bin/composer /usr/bin/composer
 
-# The apt-get sources for this are so old it has been archived & needs chainging
+# The apt-get sources for this are so old it has been archived & needs changing
 COPY ./build-assets/etc/apt/sources.list /etc/apt/sources.list
 
 # The pecl is so old it needs the local offline install now
